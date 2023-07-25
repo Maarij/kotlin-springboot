@@ -1,3 +1,6 @@
+import com.kotlinspringboot.functions.courseName
+import com.kotlinspringboot.functions.topLevelFunction
+
 fun main() {
     val name = "Maarij"
     println(name);
@@ -23,4 +26,9 @@ fun main() {
         DEF
     """.trimIndent()
     println(multiLine1)
+
+    val num = topLevelFunction()
+    println("Num is $num")
+    println("course name is $courseName")
+
 }
