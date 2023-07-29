@@ -5,6 +5,12 @@ class Person(
     val age: Int = 0
 ) {
     var email: String = ""
+    var nameLength: Int = 0
+
+    init {
+        println("Inside Init Block")
+        nameLength = name.length
+    }
 
     constructor(
         _email: String,
@@ -20,17 +26,17 @@ class Person(
 }
 
 fun main() {
-    val person = Person("Alex", 25)
-    person.action()
-    println("Name : ${person.name} and the age is ${person.age}")
+    /* val person = Person("Alex", 25)
+     person.action()
+     println("Name : ${person.name} and the age is ${person.age}")
 
-    val person1 = Person()
-    println("Name : ${person1.name} and the age is ${person1.age}")
+     val person1 = Person()
+     println("Name : ${person1.name} and the age is ${person1.age}")*/
 
     val person2 = Person(_email = "abc@gmail.com", "Alex", 25)
 
     println(
         "Name : ${person2.name} and the age is ${person2.age} and the email is " +
-                "${person2.email}"
+                "${person2.email} and the nameLength is ${person2.nameLength}"
     )
 }
