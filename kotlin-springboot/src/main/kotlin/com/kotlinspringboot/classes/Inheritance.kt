@@ -1,26 +1,33 @@
-package com.kotlinplayground.classes
+package com.kotlinspringboot.classes
 
-open class User(val name : String){
-
-    fun login(){
+open class User(val name: String) {
+    open var isLoggedIn: Boolean = false
+    open fun login() {
         println("Inside user Login")
     }
 
 }
 
-open class abc
 
-class Student(name : String) : User(name)
+class Student(name: String) : User(name) {
+    override var isLoggedIn: Boolean = false
+    override fun login() {
+        println("Inside Student Login")
+        super.login()
+    }
+}
 
-class Instructor(name : String) : User(name)
+class Instructor(name: String) : User(name)
 
 fun main() {
 
     val student = Student("Alex")
     println("name is : ${student.name}")
     student.login()
+    student.isLoggedIn = true
+    println("Logged in values is : ${student.isLoggedIn}")
 
-    val instructor = Instructor("Dilip")
+    val instructor = Instructor("Maarij")
     println("name is : ${instructor.name}")
     instructor.login()
 }
