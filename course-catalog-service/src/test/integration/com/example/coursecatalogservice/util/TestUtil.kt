@@ -1,5 +1,6 @@
 package com.example.coursecatalogservice.util
 
+import com.example.coursecatalogservice.dto.CourseDto
 import com.example.coursecatalogservice.entity.Course
 
 fun courseEntityList() = listOf(
@@ -15,4 +16,14 @@ fun courseEntityList() = listOf(
         null,
         "Wiremock for Java Developers", "Development",
     )
+)
+
+fun CourseDto(
+    id: Int? = null,
+    name: String = "Build RestFul APis using Spring Boot and Kotlin",
+    category: String = "Maarij",
+) = CourseDto(
+    id,
+    name,
+    category,
 )
