@@ -34,11 +34,11 @@ class CourseControllerIT {
 
     @Test
     fun addCourse() {
-        val courseDto = CourseDto(null, "Build Restful APIs", "Maarij")
+        val CourseDto = CourseDto(null, "Build Restful APIs", "Maarij")
 
         val savedCourseDto = webTestClient.post()
             .uri("/v1/courses")
-            .bodyValue(courseDto)
+            .bodyValue(CourseDto)
             .exchange()
             .expectStatus().isCreated
             .expectBody(CourseDto::class.java)
@@ -52,7 +52,7 @@ class CourseControllerIT {
 
     @Test
     fun retrieveAllCourses() {
-        val courseDtos = webTestClient
+        val CourseDtos = webTestClient
             .get()
             .uri("/v1/courses")
             .exchange()
@@ -61,6 +61,32 @@ class CourseControllerIT {
             .returnResult()
             .responseBody
 
-        assertEquals(3, courseDtos!!.size)
+        assertEquals(3, CourseDtos!!.size)
+    }
+
+    @Test
+    fun updateCourse(){
+        //existing course
+        val course = Course(null,
+            "Build RestFul APis using SpringBoot and Kotlin", "Development")
+        courseRepository.save(course)
+
+        //Updated CourseDto
+        val updatedCourseDto = CourseDto(null,
+            "Build RestFul APis using SpringBoot and Kotlin1", "Development")
+
+
+        val updatedCourse = webTestClient
+            .put()
+            .uri("/v1/courses/{courseId}", course.id)
+            .bodyValue(updatedCourseDto)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(CourseDto::class.java)
+            .returnResult()
+            .responseBody
+
+        assertEquals("Build RestFul APis using SpringBoot and Kotlin1", updatedCourse!!.name)
+
     }
 }
