@@ -11,6 +11,7 @@ import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
@@ -46,6 +47,20 @@ class CourseControllerTest {
         Assertions.assertTrue {
             savedCourseDto!!.id != null
         }
+    }
+
+    @Test
+    fun addCourse_validation() {
+        val courseDto = CourseDto(name="", category = "")
+
+        every { courseServiceMock.addCourse(any()) } returns CourseDto(id = 1)
+
+        webTestClient
+            .post()
+            .uri("/v1/courses")
+            .bodyValue(courseDto)
+            .exchange()
+            .expectStatus().isBadRequest
     }
 
     @Test
@@ -88,14 +103,14 @@ class CourseControllerTest {
             .returnResult()
             .responseBody
 
-        Assertions.assertEquals("Build RestFul APis using SpringBoot and Kotlin1", updatedCourse!!.name)
+        assertEquals("Build RestFul APis using SpringBoot and Kotlin1", updatedCourse!!.name)
     }
 
     @Test
     fun deleteCourse(){
         every { courseServiceMock.deleteCourse(any()) } just runs
 
-        val updatedCourse = webTestClient
+        webTestClient
             .delete()
             .uri("/v1/courses/{courseId}", 100)
             .exchange()
